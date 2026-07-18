@@ -3,7 +3,7 @@
 <div align="center">
   <img src="dump/logo.png" alt="Dumb Coding logo" width="180" />
 
-  <h1 style="margin: 0.4em 0 0.2em; font-family: 'Segoe UI', 'Trebuchet MS', sans-serif; letter-spacing: 0.25em; color: #7ee7ff; text-transform: uppercase;">DUMB CODING</h1>
+  <h1 style="margin: 0.4em 0 0.2em; font-family: 'Segoe UI', 'Trebuchet MS', sans-serif; letter-spacing: 0.25em; color: #7ee7ff; text-transform: uppercase;">Code in NestJS</h1>
 
   <p style="margin: 0.5em 0 0; font-size: 1.05rem; color: #dcefff; font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;">
     Welcome to Dumb Coding — where bugs are features, coffee is our fuel, and "it works on my machine" is a valid debugging strategy. A community of developers who write code, break code, fix code, and pretend we knew the solution all along. 🚀💻
