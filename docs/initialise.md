@@ -75,3 +75,8 @@ npm run build
 ## ✅ Ready to go
 
 You now have a clean NestJS starter project ready for building your own backend, API, or full-stack experience.
+
+---
+
+Related changes: [Start a new NestJS project
+](https://github.com/krishnadasd/solidcode/commit/c946b121718a99a220643c23eb5c44e6bce9c6bc)
