@@ -79,4 +79,4 @@ You now have a clean NestJS starter project ready for building your own backend,
 ---
 
 Related changes: [Start a new NestJS project
-](https://github.com/krishnadasd/solidcode/commit/c946b121718a99a220643c23eb5c44e6bce9c6bc)
+](https://github.com/dumb-coding/nest-solid/tree/Start_a_new_NestJS_project)
