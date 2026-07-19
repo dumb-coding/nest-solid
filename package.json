@@ -16,13 +16,16 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
+    "test:int": "set -a && source .env && set +a && TABLE_PREFIX=int_ INTEGRATION_MODE=true jest",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "redis": "^4.6.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
