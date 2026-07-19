@@ -22,4 +22,47 @@
 
 - [Start a new NestJS project](docs/initialise.md)
 
+## Run locally
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy the sample environment file and adjust the values if needed:
+
+```bash
+cp .env.example .env
+```
+
+3. Start a password-protected Redis container:
+
+```bash
+docker run --name solidcode-redis -p 6379:6379 -e REDIS_PASSWORD=secret123 -d redis:7-alpine redis-server --requirepass secret123
+```
+
+4. Start the Nest application:
+
+```bash
+npm run start:dev
+```
+
+5. Open the app at:
+
+```text
+http://localhost:3000
+```
+
+### Environment variables
+
+The app reads the following values from [.env](.env):
+
+```env
+PORT=3000
+REDIS_URL=redis://:secret123@127.0.0.1:6379
+```
+
+If you prefer to use a different password, update both the Docker command and the Redis URL in your environment file.
+
 
