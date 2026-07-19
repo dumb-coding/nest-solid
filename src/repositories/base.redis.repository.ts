@@ -117,7 +117,10 @@ export abstract class BaseRedisRepository<T extends { id: string }> {
     return this.cloneTable(await this.getTable());
   }
 
-  protected async updateInternal(id: string, patch: Partial<T>): Promise<T | null> {
+  protected async updateInternal(
+    id: string,
+    patch: Partial<T>,
+  ): Promise<T | null> {
     const table = await this.getTable();
     const index = table.findIndex((item) => item.id === id);
 
@@ -125,7 +128,7 @@ export abstract class BaseRedisRepository<T extends { id: string }> {
       return null;
     }
 
-    const updated = { ...table[index], ...patch } as T;
+    const updated = { ...table[index], ...patch };
     const nextTable = [...table];
     nextTable[index] = updated;
 

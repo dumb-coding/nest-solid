@@ -7,7 +7,10 @@ import { SAMPLE_REPOSITORY, SampleService } from './sample.service';
 
 const getRepositoryProvider = () => ({
   provide: SAMPLE_REPOSITORY,
-  useClass: process.env.INTEGRATION_MODE === 'true' ? SampleRedisRepository : SampleInMemoryRepository,
+  useClass:
+    process.env.INTEGRATION_MODE === 'true'
+      ? SampleRedisRepository
+      : SampleInMemoryRepository,
 });
 
 describe('SampleController', () => {

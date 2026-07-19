@@ -42,7 +42,11 @@ describe('BaseInMemoryRepository', () => {
     expect(stored).toEqual({ id: '1', name: 'beta', count: 1 });
 
     updated!.name = 'gamma';
-    expect(await repository.repository.findById('1')).toEqual({ id: '1', name: 'beta', count: 1 });
+    expect(await repository.repository.findById('1')).toEqual({
+      id: '1',
+      name: 'beta',
+      count: 1,
+    });
   });
 
   it('deletes entities and reports missing rows cleanly', async () => {

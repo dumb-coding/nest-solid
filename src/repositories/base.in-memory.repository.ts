@@ -27,12 +27,14 @@ export abstract class BaseInMemoryRepository<T extends { id: string }> {
     };
   }
 
-  protected getTable(): T[] {
+  protected async getTable(): Promise<T[]> {
+    await Promise.resolve();
     return this.store.get(this.tableName) ?? [];
   }
 
-  protected saveTable(table: T[]): void {
+  protected async saveTable(table: T[]): Promise<void> {
     this.store.set(this.tableName, table);
+    await Promise.resolve();
   }
 
   protected cloneEntity(entity: T): T {
@@ -44,7 +46,7 @@ export abstract class BaseInMemoryRepository<T extends { id: string }> {
   }
 
   protected async createInternal(entity: T): Promise<T> {
-    const table = this.getTable();
+    const table = await this.getTable();
     const index = table.findIndex((item) => item.id === entity.id);
     const nextTable = [...table];
 
@@ -54,44 +56,47 @@ export abstract class BaseInMemoryRepository<T extends { id: string }> {
       nextTable.push(this.cloneEntity(entity));
     }
 
-    this.saveTable(nextTable);
+    await this.saveTable(nextTable);
     return this.cloneEntity(entity);
   }
 
   protected async findByIdInternal(id: string): Promise<T | null> {
-    const entity = this.getTable().find((item) => item.id === id);
+    const entity = (await this.getTable()).find((item) => item.id === id);
     return entity ? this.cloneEntity(entity) : null;
   }
 
   protected async findAllInternal(): Promise<T[]> {
-    return this.cloneTable(this.getTable());
+    return this.cloneTable(await this.getTable());
   }
 
-  protected async updateInternal(id: string, patch: Partial<T>): Promise<T | null> {
-    const table = this.getTable();
+  protected async updateInternal(
+    id: string,
+    patch: Partial<T>,
+  ): Promise<T | null> {
+    const table = await this.getTable();
     const index = table.findIndex((item) => item.id === id);
 
     if (index < 0) {
       return null;
     }
 
-    const updated = { ...table[index], ...patch } as T;
+    const updated = { ...table[index], ...patch };
     const nextTable = [...table];
     nextTable[index] = updated;
 
-    this.saveTable(nextTable);
+    await this.saveTable(nextTable);
     return this.cloneEntity(updated);
   }
 
   protected async deleteInternal(id: string): Promise<boolean> {
-    const table = this.getTable();
+    const table = await this.getTable();
     const nextTable = table.filter((item) => item.id !== id);
 
     if (nextTable.length === table.length) {
       return false;
     }
 
-    this.saveTable(nextTable);
+    await this.saveTable(nextTable);
     return true;
   }
 
@@ -105,6 +110,7 @@ export abstract class BaseInMemoryRepository<T extends { id: string }> {
 
   protected async clearInternal(): Promise<void> {
     this.store.clear();
+    await Promise.resolve();
   }
 
   protected async closeInternal(): Promise<void> {

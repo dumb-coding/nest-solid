@@ -5,7 +5,9 @@ jest.mock('redis', () => ({
   createClient: jest.fn(),
 }));
 
-const mockCreateClient = createClient as jest.MockedFunction<typeof createClient>;
+const mockCreateClient = createClient as jest.MockedFunction<
+  typeof createClient
+>;
 const redisClient = {
   connect: jest.fn(),
   on: jest.fn(),
@@ -67,11 +69,16 @@ describe('BaseRedisRepository', () => {
     expect(created).toEqual(entity);
     expect(found).toEqual(entity);
     expect(all).toEqual([entity]);
-    expect(redisClient.set).toHaveBeenCalledWith(expectedKey, JSON.stringify([entity]));
+    expect(redisClient.set).toHaveBeenCalledWith(
+      expectedKey,
+      JSON.stringify([entity]),
+    );
   });
 
   it('updates an existing entity and returns the updated copy', async () => {
-    redisClient.get.mockResolvedValueOnce(JSON.stringify([{ id: '1', name: 'alpha', count: 1 }]));
+    redisClient.get.mockResolvedValueOnce(
+      JSON.stringify([{ id: '1', name: 'alpha', count: 1 }]),
+    );
 
     const updated = await repository.repository.update('1', { name: 'beta' });
 
@@ -85,7 +92,9 @@ describe('BaseRedisRepository', () => {
   });
 
   it('deletes entities and reports missing rows', async () => {
-    redisClient.get.mockResolvedValueOnce(JSON.stringify([{ id: '1', name: 'alpha', count: 1 }]));
+    redisClient.get.mockResolvedValueOnce(
+      JSON.stringify([{ id: '1', name: 'alpha', count: 1 }]),
+    );
     redisClient.del.mockResolvedValueOnce(1);
 
     await expect(repository.repository.delete('1')).resolves.toBe(true);

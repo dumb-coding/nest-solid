@@ -8,7 +8,7 @@ import { SampleModule } from './modules/sample/sample.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    SampleModule
+    SampleModule,
   ],
 })
 export class AppModule {}
