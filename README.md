@@ -21,6 +21,7 @@
 ## Contents
 
 - [Start a new NestJS project](docs/initialise.md)
+- [Repository pattern](docs/repository.md)
 
 ## Run locally
 
