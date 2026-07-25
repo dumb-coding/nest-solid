@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SampleInMemoryRepository } from '../../repositories/sample/sample.in-memory.repository';
 import { SampleRedisRepository } from '../../repositories/sample/sample.redis.repository';
 import { SampleController } from './sample.controller';
+import { BaseRepositoryInterface } from '../../repositories/base.repository.interface';
 import { SampleRepositoryInterface } from '../../repositories/sample/sample.repository.interface';
 import { SAMPLE_REPOSITORY, SampleService } from './sample.service';
 
@@ -16,7 +17,7 @@ const getRepositoryProvider = () => ({
 describe('SampleController', () => {
   let controller: SampleController;
   let module: TestingModule;
-  let repository: SampleRepositoryInterface;
+  let repository: SampleRepositoryInterface & BaseRepositoryInterface;
 
   beforeEach(async () => {
     module = await Test.createTestingModule({

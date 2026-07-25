@@ -40,7 +40,4 @@ export interface SampleRepositoryInterface {
    * @returns Promise<boolean>
    */
   delete(id: string): Promise<boolean>;
-
-  clear(): Promise<void>; // clear all entities from the repository (if applicable)
-  close(): Promise<void>; // close the repository connection (if applicable)
 }

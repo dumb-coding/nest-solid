@@ -1,3 +1,5 @@
+import type { BaseRepositoryInterface } from './base.repository.interface';
+
 type RepositoryOperations<T> = {
   create(entity: T): Promise<T>;
   findById(id: string): Promise<T | null>;
@@ -8,7 +10,9 @@ type RepositoryOperations<T> = {
   close(): Promise<void>;
 };
 
-export abstract class BaseInMemoryRepository<T extends { id: string }> {
+export abstract class BaseInMemoryRepository<
+  T extends { id: string },
+> implements BaseRepositoryInterface {
   protected readonly tableName: string;
   public readonly repository: RepositoryOperations<T>;
   private readonly store = new Map<string, T[]>();

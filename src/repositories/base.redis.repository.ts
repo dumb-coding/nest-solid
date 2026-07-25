@@ -1,4 +1,5 @@
 import { createClient } from 'redis';
+import type { BaseRepositoryInterface } from './base.repository.interface';
 
 type RepositoryOperations<T> = {
   create(entity: T): Promise<T>;
@@ -10,7 +11,9 @@ type RepositoryOperations<T> = {
   close(): Promise<void>;
 };
 
-export abstract class BaseRedisRepository<T extends { id: string }> {
+export abstract class BaseRedisRepository<
+  T extends { id: string },
+> implements BaseRepositoryInterface {
   protected readonly tableName: string;
   public readonly repository: RepositoryOperations<T>;
   private client: ReturnType<typeof createClient> | null = null;
