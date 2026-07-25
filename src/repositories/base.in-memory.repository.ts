@@ -1,3 +1,9 @@
+/**
+ * Shared repository contract for in-memory persistence.
+ *
+ * The repository exposes operation methods under `repository` to keep the concrete
+ * repository class implementation small and focused.
+ */
 import type { BaseRepositoryInterface } from './base.repository.interface';
 
 type RepositoryOperations<T> = {
@@ -31,16 +37,25 @@ export abstract class BaseInMemoryRepository<
     };
   }
 
+  /**
+   * Reads the table data for the current repository namespace.
+   */
   protected async getTable(): Promise<T[]> {
     await Promise.resolve();
     return this.store.get(this.tableName) ?? [];
   }
 
+  /**
+   * Persists the table data for the current repository namespace.
+   */
   protected async saveTable(table: T[]): Promise<void> {
     this.store.set(this.tableName, table);
     await Promise.resolve();
   }
 
+  /**
+   * Returns a shallow clone of an entity to avoid mutating stored objects.
+   */
   protected cloneEntity(entity: T): T {
     return { ...entity };
   }
@@ -112,11 +127,20 @@ export abstract class BaseInMemoryRepository<
     await this.closeInternal();
   }
 
+  /**
+   * Clears the entire in-memory store for this repository.
+   */
   protected async clearInternal(): Promise<void> {
     this.store.clear();
     await Promise.resolve();
   }
 
+  /**
+   * Closes the in-memory repository.
+   *
+   * The close operation is a no-op beyond clearing state because there is no
+   * external connection to release.
+   */
   protected async closeInternal(): Promise<void> {
     await this.clearInternal();
   }

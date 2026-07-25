@@ -1,3 +1,8 @@
+/**
+ * Redis-backed repository for sample entities.
+ *
+ * Uses Redis storage and shared base repository logic for persistence.
+ */
 import { BaseRedisRepository } from '../base.redis.repository';
 import { SampleEntity } from '../../interfaces/sample.interface';
 import { SampleRepositoryInterface } from './sample.repository.interface';
@@ -10,6 +15,9 @@ export class SampleRedisRepository
     super('sample');
   }
 
+  /**
+   * Creates or replaces a sample entity in Redis.
+   */
   async create(entity: SampleEntity): Promise<SampleEntity> {
     return await this.repository.create(entity);
   }
@@ -22,6 +30,9 @@ export class SampleRedisRepository
     return await this.repository.findAll();
   }
 
+  /**
+   * Updates a sample entity in the Redis store.
+   */
   async update(
     id: string,
     patch: Partial<SampleEntity>,

@@ -1,3 +1,6 @@
+/**
+ * Shared repository contract for Redis-backed persistence.
+ */
 import { createClient } from 'redis';
 import type { BaseRepositoryInterface } from './base.repository.interface';
 
@@ -32,6 +35,9 @@ export abstract class BaseRedisRepository<
     };
   }
 
+  /**
+   * Converts a table array to a Redis-storable string.
+   */
   protected serializeTable(table: T[]): string {
     return JSON.stringify(table);
   }
@@ -40,6 +46,11 @@ export abstract class BaseRedisRepository<
     return JSON.parse(value) as T[];
   }
 
+  /**
+   * Creates and connects a Redis client.
+   *
+   * The connection is reused by `getClient()` so that multiple operations share the same client.
+   */
   protected async createClient(): Promise<ReturnType<typeof createClient>> {
     const redisUrl = process.env.REDIS_URL ?? 'redis://127.0.0.1:6379';
     const client = createClient({ url: redisUrl });
@@ -159,11 +170,19 @@ export abstract class BaseRedisRepository<
     await this.closeInternal();
   }
 
+  /**
+   * Clears Redis state by flushing all keys for the connected client.
+   *
+   * Note: this uses `flushAll()` and is intended for isolated test usage only.
+   */
   protected async clearInternal(): Promise<void> {
     const client = await this.getClient();
     await client.flushAll();
   }
 
+  /**
+   * Closes the Redis connection and releases the client instance.
+   */
   protected async closeInternal(): Promise<void> {
     if (!this.client) {
       return;

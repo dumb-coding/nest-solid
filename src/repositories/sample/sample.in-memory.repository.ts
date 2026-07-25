@@ -1,3 +1,8 @@
+/**
+ * In-memory repository for sample entities.
+ *
+ * Used during tests and development when Redis is not required.
+ */
 import { BaseInMemoryRepository } from '../base.in-memory.repository';
 import { SampleEntity } from '../../interfaces/sample.interface';
 import { SampleRepositoryInterface } from './sample.repository.interface';
@@ -10,6 +15,9 @@ export class SampleInMemoryRepository
     super('sample');
   }
 
+  /**
+   * Creates or replaces a sample entity in the in-memory store.
+   */
   async create(entity: SampleEntity): Promise<SampleEntity> {
     return await this.repository.create(entity);
   }
@@ -22,6 +30,9 @@ export class SampleInMemoryRepository
     return await this.repository.findAll();
   }
 
+  /**
+   * Updates a sample entity if it exists; returns null otherwise.
+   */
   async update(
     id: string,
     patch: Partial<SampleEntity>,

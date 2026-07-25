@@ -1,8 +1,18 @@
+/**
+ * Injection token for the sample repository.
+ *
+ * Used by the service to obtain a repository implementation at runtime.
+ */
 import { Inject, Injectable } from '@nestjs/common';
 import type { SampleRepositoryInterface } from '../../repositories/sample/sample.repository.interface';
 
 export const SAMPLE_REPOSITORY = 'SAMPLE_REPOSITORY';
 
+/**
+ * Application service for sample-related business logic.
+ *
+ * This layer is intentionally slim and delegates persistence to the repository.
+ */
 @Injectable()
 export class SampleService {
   constructor(
@@ -10,6 +20,9 @@ export class SampleService {
     private readonly repository: SampleRepositoryInterface,
   ) {}
 
+  /**
+   * Returns the first sample title in storage, or creates a default sample if none exists.
+   */
   async getSample(): Promise<string> {
     const existingSamples = await this.repository.findAll();
 

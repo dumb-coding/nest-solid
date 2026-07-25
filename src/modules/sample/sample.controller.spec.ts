@@ -1,3 +1,6 @@
+/**
+ * Integration-style tests for the sample controller and repository wiring.
+ */
 import { Test, TestingModule } from '@nestjs/testing';
 import { SampleInMemoryRepository } from '../../repositories/sample/sample.in-memory.repository';
 import { SampleRedisRepository } from '../../repositories/sample/sample.redis.repository';

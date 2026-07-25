@@ -1,3 +1,6 @@
+/**
+ * Root application module that wires global config and feature modules.
+ */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SampleModule } from './modules/sample/sample.module';

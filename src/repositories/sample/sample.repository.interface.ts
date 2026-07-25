@@ -1,3 +1,8 @@
+/**
+ * Repository interface for sample entity persistence.
+ *
+ * Separate from lifecycle methods so that business code depends only on CRUD behavior.
+ */
 import { SampleEntity } from '../../interfaces/sample.interface';
 
 export type { SampleEntity } from '../../interfaces/sample.interface';
