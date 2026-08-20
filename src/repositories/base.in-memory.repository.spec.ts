@@ -4,6 +4,10 @@ type SampleEntity = {
   id: string;
   name: string;
   count: number;
+  meta?: {
+    tags: string[];
+    nested: { enabled: boolean };
+  };
 };
 
 class SampleInMemoryRepository extends BaseInMemoryRepository<SampleEntity> {
@@ -50,9 +54,7 @@ describe('BaseInMemoryRepository', () => {
   });
 
   it('keeps nested object and array data isolated from returned copies', async () => {
-    const entity: SampleEntity & {
-      meta: { tags: string[]; nested: { enabled: boolean } };
-    } = {
+    const entity: SampleEntity = {
       id: '1',
       name: 'alpha',
       count: 1,
@@ -72,7 +74,9 @@ describe('BaseInMemoryRepository', () => {
     returned!.meta.tags.push('two');
     returned!.meta.nested.enabled = false;
 
-    await expect(repository.repository.findById('1')).resolves.toEqual(expected);
+    await expect(repository.repository.findById('1')).resolves.toEqual(
+      expected,
+    );
   });
 
   it('deletes entities and reports missing rows cleanly', async () => {
