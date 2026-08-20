@@ -54,10 +54,10 @@ export abstract class BaseInMemoryRepository<
   }
 
   /**
-   * Returns a shallow clone of an entity to avoid mutating stored objects.
+   * Returns a deep clone of an entity to avoid mutating stored objects.
    */
   protected cloneEntity(entity: T): T {
-    return { ...entity };
+    return structuredClone(entity);
   }
 
   protected cloneTable(table: T[]): T[] {

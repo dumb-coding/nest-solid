@@ -49,6 +49,32 @@ describe('BaseInMemoryRepository', () => {
     });
   });
 
+  it('keeps nested object and array data isolated from returned copies', async () => {
+    const entity: SampleEntity & {
+      meta: { tags: string[]; nested: { enabled: boolean } };
+    } = {
+      id: '1',
+      name: 'alpha',
+      count: 1,
+      meta: { tags: ['one'], nested: { enabled: true } },
+    };
+    const expected = {
+      ...entity,
+      meta: {
+        tags: [...entity.meta.tags],
+        nested: { ...entity.meta.nested },
+      },
+    };
+
+    await repository.repository.create(entity);
+
+    const returned = await repository.repository.findById('1');
+    returned!.meta.tags.push('two');
+    returned!.meta.nested.enabled = false;
+
+    await expect(repository.repository.findById('1')).resolves.toEqual(expected);
+  });
+
   it('deletes entities and reports missing rows cleanly', async () => {
     await repository.repository.create({ id: '1', name: 'alpha', count: 1 });
 

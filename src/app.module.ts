@@ -7,6 +7,8 @@ import { SampleModule } from './modules/sample/sample.module';
 
 @Module({
   imports: [
+    // Load environment variables globally for the application
+    // Reference for ConfigModule: https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
